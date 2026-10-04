@@ -1,589 +1,1578 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b6b3a">
 
-    <meta name="description"
-          content="Your Ration - Get Your Ration in Just 30 Minutes">
+<title>Your Ration — Groceries Delivered in 30 Minutes</title>
 
-    <title>Your Ration | Get Your Ration in 30 Minutes</title>
+<style>
 
-    <style>
+/* =========================================================
+   YOUR RATION — PREMIUM DESIGN SYSTEM
+   ========================================================= */
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap');
 
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            background: #f7f8fa;
-            color: #202124;
-            padding-bottom: 75px;
-        }
+:root {
+    --green: #08783f;
+    --green-dark: #04582d;
+    --green-light: #e8f6ee;
 
-        /* HEADER */
+    --yellow: #f6b51d;
+    --cream: #fffaf0;
 
-        header {
-            background: white;
-            padding: 15px 18px;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
-        }
+    --text: #171a19;
+    --muted: #737875;
 
-        .top-bar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
+    --border: #e9ece9;
+    --white: #ffffff;
 
-        .logo {
-            font-size: 24px;
-            font-weight: 800;
-            color: #16883b;
-        }
+    --danger: #d94747;
 
-        .logo span {
-            color: #f5a400;
-        }
+    --radius-sm: 10px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
 
-        .account {
-            font-size: 24px;
-            cursor: pointer;
-        }
+    --shadow-sm: 0 4px 18px rgba(17, 45, 30, .06);
+    --shadow-md: 0 10px 35px rgba(17, 45, 30, .10);
+}
 
-        /* LOCATION */
+/* RESET */
 
-        .location {
-            margin-top: 8px;
-            font-size: 13px;
-            color: #666;
-        }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-        .location strong {
-            color: #222;
-        }
+html {
+    scroll-behavior: smooth;
+}
 
-        /* SEARCH */
+body {
+    font-family: "DM Sans", Arial, sans-serif;
+    color: var(--text);
+    background: #fafbf9;
+    line-height: 1.5;
+}
 
-        .search-box {
-            margin-top: 14px;
-            display: flex;
-            align-items: center;
-            background: #f1f3f4;
-            border-radius: 12px;
-            padding: 12px 14px;
-        }
+button,
+input {
+    font: inherit;
+}
 
-        .search-box span {
-            font-size: 20px;
-            margin-right: 8px;
-        }
+button {
+    cursor: pointer;
+}
 
-        .search-box input {
-            border: none;
-            outline: none;
-            background: transparent;
-            width: 100%;
-            font-size: 15px;
-        }
+a {
+    text-decoration: none;
+    color: inherit;
+}
 
-        /* HERO */
+/* =========================================================
+   TOP ANNOUNCEMENT
+   ========================================================= */
 
-        .hero {
-            margin: 18px;
-            padding: 25px;
-            border-radius: 20px;
-            background: linear-gradient(135deg, #0b7d35, #20a84b);
-            color: white;
-            overflow: hidden;
-        }
+.top-strip {
+    background: var(--green-dark);
+    color: white;
+    height: 34px;
 
-        .hero h1 {
-            font-size: 27px;
-            line-height: 1.15;
-            margin-bottom: 10px;
-        }
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-        .hero p {
-            font-size: 14px;
-            opacity: 0.95;
-            margin-bottom: 18px;
-        }
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .2px;
+}
 
-        .shop-btn {
-            display: inline-block;
-            background: white;
-            color: #087632;
-            padding: 11px 18px;
-            border-radius: 10px;
-            font-weight: bold;
-            cursor: pointer;
-        }
+.top-strip span {
+    color: #ffd45a;
+    margin-left: 5px;
+}
 
-        /* SECTION */
+/* =========================================================
+   HEADER
+   ========================================================= */
 
-        section {
-            padding: 8px 18px;
-        }
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 
-        .section-title {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 13px;
-        }
+    background: rgba(255,255,255,.94);
+    backdrop-filter: blur(18px);
 
-        .section-title h2 {
-            font-size: 19px;
-        }
+    border-bottom: 1px solid rgba(0,0,0,.06);
+}
 
-        .section-title a {
-            color: #16883b;
-            font-size: 13px;
-            font-weight: bold;
-        }
+.header-inner {
+    max-width: 1240px;
+    margin: auto;
 
-        /* CATEGORIES */
+    min-height: 78px;
 
-        .categories {
-            display: flex;
-            gap: 13px;
-            overflow-x: auto;
-            padding-bottom: 8px;
-        }
+    display: grid;
+    grid-template-columns: 220px 1fr auto;
+    align-items: center;
+    gap: 28px;
 
-        .categories::-webkit-scrollbar {
-            display: none;
-        }
+    padding: 0 24px;
+}
 
-        .category {
-            min-width: 75px;
-            text-align: center;
-            cursor: pointer;
-        }
+/* LOGO */
 
-        .category-icon {
-            width: 65px;
-            height: 65px;
-            border-radius: 18px;
-            background: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 30px;
-            margin: auto;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-        }
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
 
-        .category p {
-            margin-top: 6px;
-            font-size: 12px;
-        }
+.logo-symbol {
+    width: 42px;
+    height: 42px;
 
-        /* PRODUCTS */
+    display: grid;
+    place-items: center;
 
-        .products {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-        }
+    background: var(--green);
+    color: white;
 
-        .product {
-            background: white;
-            border-radius: 15px;
-            padding: 10px;
-            position: relative;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        }
+    border-radius: 13px;
 
-        .discount {
-            position: absolute;
-            top: 8px;
-            left: 8px;
-            background: #e9f8ed;
-            color: #118239;
-            padding: 4px 7px;
-            border-radius: 6px;
-            font-size: 10px;
-            font-weight: bold;
-        }
+    font-size: 20px;
 
-        .product-image {
-            height: 125px;
-            border-radius: 12px;
-            background: #f5f5f5;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 55px;
-            margin-bottom: 10px;
-        }
+    box-shadow:
+        0 7px 18px rgba(8,120,63,.22);
+}
 
-        .product-name {
-            font-size: 14px;
-            font-weight: 600;
-            min-height: 35px;
-        }
+.logo-text {
+    font-family: "Manrope", sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: -.7px;
+}
 
-        .product-weight {
-            font-size: 11px;
-            color: #777;
-            margin-top: 4px;
-        }
+.logo-text span {
+    color: var(--green);
+}
 
-        .price-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 9px;
-        }
+/* LOCATION */
 
-        .price {
-            font-size: 16px;
-            font-weight: bold;
-        }
+.location {
+    display: flex;
+    align-items: center;
+    gap: 9px;
 
-        .old-price {
-            font-size: 11px;
-            color: #999;
-            text-decoration: line-through;
-            margin-left: 4px;
-        }
+    font-size: 13px;
+    color: var(--muted);
 
-        .add-btn {
-            border: 1px solid #16883b;
-            background: white;
-            color: #16883b;
-            border-radius: 8px;
-            padding: 6px 12px;
-            font-weight: bold;
-            cursor: pointer;
-        }
+    margin-bottom: 6px;
+}
 
-        .add-btn:hover {
-            background: #16883b;
-            color: white;
-        }
+.location strong {
+    color: var(--text);
+}
 
-        /* BOTTOM NAVIGATION */
+.location-pin {
+    color: var(--green);
+    font-size: 16px;
+}
 
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 68px;
-            background: white;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            border-top: 1px solid #eee;
-            z-index: 200;
-        }
+/* SEARCH */
 
-        .nav-item {
-            text-align: center;
-            font-size: 11px;
-            color: #777;
-            cursor: pointer;
-        }
+.search-wrapper {
+    position: relative;
+}
 
-        .nav-item div {
-            font-size: 22px;
-            margin-bottom: 3px;
-        }
+.search {
+    width: 100%;
+    height: 46px;
 
-        .nav-item.active {
-            color: #16883b;
-            font-weight: bold;
-        }
+    background: #f4f6f4;
+    border: 1px solid transparent;
 
-        /* DESKTOP */
+    border-radius: 13px;
 
-        @media (min-width: 700px) {
+    padding: 0 16px 0 45px;
 
-            body {
-                max-width: 1200px;
-                margin: auto;
-            }
+    outline: none;
 
-            .products {
-                grid-template-columns:
-                    repeat(4, 1fr);
-            }
+    transition: .2s;
+}
 
-            .hero {
-                padding: 40px;
-            }
+.search:focus {
+    background: white;
+    border-color: #b9ddc6;
 
-            .hero h1 {
-                font-size: 38px;
-            }
+    box-shadow:
+        0 0 0 4px rgba(8,120,63,.08);
+}
 
-        }
+.search-icon {
+    position: absolute;
 
-    </style>
+    left: 16px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    color: #777;
+    font-size: 17px;
+}
+
+/* HEADER ACTIONS */
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.icon-button {
+    width: 43px;
+    height: 43px;
+
+    display: grid;
+    place-items: center;
+
+    border: 1px solid var(--border);
+    background: white;
+
+    border-radius: 12px;
+
+    font-size: 19px;
+
+    transition: .2s;
+}
+
+.icon-button:hover {
+    border-color: #b7d8c3;
+    transform: translateY(-1px);
+}
+
+.account-button {
+    padding: 0 15px;
+    height: 43px;
+
+    border: 1px solid var(--border);
+    background: white;
+
+    border-radius: 12px;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    font-weight: 600;
+}
+
+/* =========================================================
+   MAIN
+   ========================================================= */
+
+.main {
+    max-width: 1240px;
+    margin: auto;
+    padding: 25px 24px 100px;
+}
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.hero {
+    min-height: 370px;
+
+    border-radius: 30px;
+
+    position: relative;
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at 85% 20%,
+            rgba(255,255,255,.20),
+            transparent 30%
+        ),
+        linear-gradient(
+            120deg,
+            #075d32,
+            #098349 65%,
+            #0b9552
+        );
+
+    color: white;
+
+    display: flex;
+    align-items: center;
+
+    padding: 48px;
+
+    box-shadow: var(--shadow-md);
+}
+
+.hero-content {
+    max-width: 580px;
+    position: relative;
+    z-index: 2;
+}
+
+.hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+
+    padding: 7px 12px;
+
+    border-radius: 999px;
+
+    background: rgba(255,255,255,.14);
+    border: 1px solid rgba(255,255,255,.18);
+
+    font-size: 12px;
+    font-weight: 700;
+
+    margin-bottom: 18px;
+}
+
+.hero h1 {
+    font-family: "Manrope", sans-serif;
+
+    font-size: clamp(38px, 5vw, 64px);
+    line-height: 1.02;
+
+    letter-spacing: -2.5px;
+
+    margin-bottom: 18px;
+}
+
+.hero h1 span {
+    color: #ffd35b;
+}
+
+.hero-description {
+    max-width: 470px;
+
+    color: rgba(255,255,255,.82);
+
+    font-size: 16px;
+
+    margin-bottom: 28px;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.primary-button {
+    border: none;
+
+    background: white;
+    color: var(--green-dark);
+
+    padding: 13px 20px;
+
+    border-radius: 12px;
+
+    font-weight: 700;
+
+    transition: .2s;
+}
+
+.primary-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,.12);
+}
+
+.secondary-button {
+    border: 1px solid rgba(255,255,255,.25);
+
+    background: rgba(255,255,255,.10);
+
+    color: white;
+
+    padding: 13px 20px;
+
+    border-radius: 12px;
+
+    font-weight: 600;
+
+    backdrop-filter: blur(8px);
+}
+
+/* HERO DECORATION */
+
+.hero-decoration {
+    position: absolute;
+
+    right: -50px;
+    bottom: -90px;
+
+    width: 390px;
+    height: 390px;
+
+    border-radius: 50%;
+
+    background: rgba(255,255,255,.07);
+}
+
+.hero-decoration::before {
+    content: "🛒";
+
+    position: absolute;
+
+    top: 65px;
+    left: 65px;
+
+    font-size: 155px;
+
+    transform: rotate(-8deg);
+
+    filter: drop-shadow(0 18px 20px rgba(0,0,0,.12));
+}
+
+/* =========================================================
+   DELIVERY TRUST BAR
+   ========================================================= */
+
+.trust-bar {
+    margin-top: 18px;
+
+    background: white;
+
+    border: 1px solid var(--border);
+
+    border-radius: 18px;
+
+    padding: 15px 20px;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    box-shadow: var(--shadow-sm);
+}
+
+.trust-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    border-right: 1px solid var(--border);
+}
+
+.trust-item:last-child {
+    border-right: none;
+}
+
+.trust-icon {
+    font-size: 20px;
+}
+
+/* =========================================================
+   SECTION
+   ========================================================= */
+
+.section {
+    margin-top: 42px;
+}
+
+.section-header {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+
+    margin-bottom: 17px;
+}
+
+.section-title {
+    font-family: "Manrope", sans-serif;
+
+    font-size: 23px;
+    letter-spacing: -.6px;
+}
+
+.section-subtitle {
+    color: var(--muted);
+    font-size: 13px;
+    margin-top: 3px;
+}
+
+.view-all {
+    color: var(--green);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+/* =========================================================
+   CATEGORIES
+   ========================================================= */
+
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 12px;
+}
+
+.category-card {
+    background: white;
+
+    border: 1px solid var(--border);
+
+    border-radius: 18px;
+
+    padding: 16px 8px;
+
+    text-align: center;
+
+    transition: .22s;
+
+    cursor: pointer;
+}
+
+.category-card:hover {
+    transform: translateY(-4px);
+
+    border-color: #b8d9c4;
+
+    box-shadow: var(--shadow-sm);
+}
+
+.category-icon {
+    width: 58px;
+    height: 58px;
+
+    margin: auto auto 10px;
+
+    display: grid;
+    place-items: center;
+
+    background: var(--green-light);
+
+    border-radius: 17px;
+
+    font-size: 28px;
+}
+
+.category-name {
+    font-size: 12px;
+    font-weight: 700;
+}
+
+/* =========================================================
+   PRODUCT GRID
+   ========================================================= */
+
+.product-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(5, minmax(0, 1fr));
+
+    gap: 15px;
+}
+
+.product-card {
+    background: white;
+
+    border: 1px solid var(--border);
+
+    border-radius: 19px;
+
+    padding: 11px;
+
+    position: relative;
+
+    transition: .22s;
+
+    overflow: hidden;
+}
+
+.product-card:hover {
+    transform: translateY(-4px);
+
+    box-shadow: var(--shadow-md);
+
+    border-color: #d7e7dc;
+}
+
+/* PRODUCT IMAGE */
+
+.product-image {
+    height: 170px;
+
+    background:
+        radial-gradient(
+            circle at 50% 40%,
+            #ffffff,
+            #f3f6f3
+        );
+
+    border-radius: 14px;
+
+    display: grid;
+    place-items: center;
+
+    font-size: 74px;
+
+    margin-bottom: 12px;
+}
+
+/* DISCOUNT */
+
+.discount-badge {
+    position: absolute;
+
+    top: 18px;
+    left: 18px;
+
+    background: #e5f6eb;
+    color: var(--green);
+
+    padding: 5px 8px;
+
+    border-radius: 7px;
+
+    font-size: 10px;
+    font-weight: 800;
+
+    z-index: 2;
+}
+
+/* PRODUCT INFORMATION */
+
+.product-brand {
+    color: #8a8f8b;
+
+    font-size: 10px;
+
+    text-transform: uppercase;
+
+    letter-spacing: .5px;
+
+    font-weight: 700;
+
+    margin-bottom: 3px;
+}
+
+.product-name {
+    font-size: 14px;
+
+    font-weight: 700;
+
+    line-height: 1.35;
+
+    min-height: 38px;
+}
+
+.product-weight {
+    color: var(--muted);
+
+    font-size: 11px;
+
+    margin-top: 4px;
+}
+
+.product-bottom {
+    margin-top: 12px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+}
+
+.product-price {
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.original-price {
+    color: #999;
+
+    font-size: 10px;
+
+    text-decoration: line-through;
+
+    margin-left: 3px;
+}
+
+.add-button {
+    border: 1px solid var(--green);
+
+    background: white;
+
+    color: var(--green);
+
+    border-radius: 9px;
+
+    padding: 7px 12px;
+
+    font-size: 12px;
+
+    font-weight: 800;
+
+    transition: .18s;
+}
+
+.add-button:hover {
+    background: var(--green);
+    color: white;
+}
+
+/* =========================================================
+   PROMO CARDS
+   ========================================================= */
+
+.promo-grid {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 16px;
+}
+
+.promo {
+    min-height: 170px;
+
+    border-radius: 22px;
+
+    padding: 27px;
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+.promo.green {
+    background: #e5f5ea;
+}
+
+.promo.yellow {
+    background: #fff4d4;
+}
+
+.promo h3 {
+    font-family: "Manrope", sans-serif;
+
+    font-size: 24px;
+
+    letter-spacing: -.6px;
+
+    max-width: 280px;
+}
+
+.promo p {
+    color: #636865;
+
+    font-size: 13px;
+
+    margin-top: 7px;
+}
+
+.promo-icon {
+    position: absolute;
+
+    right: 30px;
+    bottom: 13px;
+
+    font-size: 88px;
+
+    transform: rotate(-7deg);
+}
+
+/* =========================================================
+   CART FLOATING BUTTON
+   ========================================================= */
+
+.floating-cart {
+    position: fixed;
+
+    right: 25px;
+    bottom: 25px;
+
+    z-index: 1500;
+
+    border: none;
+
+    background: var(--green);
+
+    color: white;
+
+    min-width: 150px;
+    height: 54px;
+
+    padding: 0 18px;
+
+    border-radius: 16px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    font-weight: 800;
+
+    box-shadow:
+        0 12px 30px rgba(8,120,63,.28);
+
+    transition: .2s;
+}
+
+.floating-cart:hover {
+    transform: translateY(-3px);
+}
+
+.cart-count {
+    background: #ffd044;
+
+    color: #17371f;
+
+    min-width: 23px;
+    height: 23px;
+
+    border-radius: 50%;
+
+    display: grid;
+    place-items: center;
+
+    font-size: 11px;
+}
+
+/* =========================================================
+   MOBILE NAV
+   ========================================================= */
+
+.mobile-nav {
+    display: none;
+
+    position: fixed;
+
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+
+    height: 64px;
+
+    background: rgba(255,255,255,.96);
+
+    backdrop-filter: blur(20px);
+
+    border: 1px solid #e2e7e3;
+
+    border-radius: 19px;
+
+    z-index: 1400;
+
+    box-shadow: 0 10px 35px rgba(0,0,0,.12);
+
+    justify-content: space-around;
+    align-items: center;
+}
+
+.mobile-nav-item {
+    color: #7c827e;
+
+    font-size: 10px;
+
+    font-weight: 600;
+
+    text-align: center;
+}
+
+.mobile-nav-item div {
+    font-size: 20px;
+    margin-bottom: 2px;
+}
+
+.mobile-nav-item.active {
+    color: var(--green);
+}
+
+/* =========================================================
+   TOAST
+   ========================================================= */
+
+.toast {
+    position: fixed;
+
+    left: 50%;
+    bottom: 92px;
+
+    transform:
+        translate(-50%, 20px);
+
+    background: #171b18;
+
+    color: white;
+
+    padding: 12px 17px;
+
+    border-radius: 10px;
+
+    font-size: 13px;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition: .25s;
+
+    z-index: 3000;
+
+    box-shadow: var(--shadow-md);
+}
+
+.toast.show {
+    opacity: 1;
+
+    transform:
+        translate(-50%, 0);
+}
+
+/* =========================================================
+   SEARCH EMPTY
+   ========================================================= */
+
+.empty-state {
+    grid-column: 1 / -1;
+
+    text-align: center;
+
+    padding: 60px 20px;
+
+    color: var(--muted);
+
+    background: white;
+
+    border-radius: 18px;
+
+    border: 1px solid var(--border);
+}
+
+/* =========================================================
+   RESPONSIVE — TABLET
+   ========================================================= */
+
+@media (max-width: 1000px) {
+
+    .header-inner {
+        grid-template-columns: 190px 1fr auto;
+        gap: 15px;
+    }
+
+    .category-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .product-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+}
+
+/* =========================================================
+   RESPONSIVE — MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    body {
+        padding-bottom: 88px;
+    }
+
+    .top-strip {
+        font-size: 10px;
+    }
+
+    .header-inner {
+
+        display: block;
+
+        padding:
+            12px 15px 14px;
+    }
+
+    .logo {
+        margin-bottom: 10px;
+    }
+
+    .header-actions {
+        position: absolute;
+
+        top: 10px;
+        right: 15px;
+    }
+
+    .account-button {
+        width: 42px;
+        padding: 0;
+
+        justify-content: center;
+
+        font-size: 0;
+    }
+
+    .account-button span {
+        font-size: 18px;
+    }
+
+    .location {
+        margin-bottom: 9px;
+    }
+
+    .main {
+        padding:
+            15px 13px 100px;
+    }
+
+    .hero {
+        min-height: 355px;
+
+        padding: 29px 24px;
+
+        border-radius: 24px;
+    }
+
+    .hero h1 {
+        font-size: 39px;
+        letter-spacing: -1.8px;
+    }
+
+    .hero-description {
+        font-size: 14px;
+    }
+
+    .hero-decoration {
+        right: -150px;
+        bottom: -150px;
+    }
+
+    .hero-decoration::before {
+        font-size: 100px;
+    }
+
+    .trust-bar {
+        grid-template-columns: 1fr;
+
+        gap: 12px;
+
+        padding: 15px;
+    }
+
+    .trust-item {
+        justify-content: flex-start;
+
+        border-right: none;
+    }
+
+    .section {
+        margin-top: 31px;
+    }
+
+    .section-title {
+        font-size: 19px;
+    }
+
+    .category-grid {
+        display: flex;
+
+        overflow-x: auto;
+
+        gap: 10px;
+
+        padding-bottom: 5px;
+    }
+
+    .category-card {
+        min-width: 83px;
+    }
+
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+
+        gap: 10px;
+    }
+
+    .product-image {
+        height: 135px;
+        font-size: 58px;
+    }
+
+    .product-card {
+        border-radius: 15px;
+        padding: 9px;
+    }
+
+    .discount-badge {
+        top: 15px;
+        left: 15px;
+    }
+
+    .product-name {
+        font-size: 13px;
+    }
+
+    .product-bottom {
+        align-items: flex-end;
+    }
+
+    .product-price {
+        font-size: 14px;
+    }
+
+    .add-button {
+        padding: 6px 10px;
+    }
+
+    .promo-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .floating-cart {
+        right: 18px;
+        bottom: 88px;
+
+        height: 48px;
+
+        min-width: 135px;
+    }
+
+    .mobile-nav {
+        display: flex;
+    }
+
+}
+
+/* =========================================================
+   VERY SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 380px) {
+
+    .hero h1 {
+        font-size: 34px;
+    }
+
+    .product-grid {
+        gap: 7px;
+    }
+
+    .product-image {
+        height: 120px;
+    }
+
+}
+
+/* =========================================================
+   ANIMATION
+   ========================================================= */
+
+@keyframes fadeUp {
+
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
+.hero,
+.product-card,
+.category-card,
+.promo {
+    animation: fadeUp .5s ease both;
+}
+
+</style>
 </head>
+
 
 <body>
 
-<header>
 
-    <div class="top-bar">
+<!-- ======================================================
+     TOP STRIP
+     ====================================================== -->
 
-        <div class="logo">
-            YOUR <span>RATION</span>
+<div class="top-strip">
+
+    ⚡ Fast delivery in your area
+    <span>• Starting from ₹50 delivery</span>
+
+</div>
+
+
+<!-- ======================================================
+     HEADER
+     ====================================================== -->
+
+<header class="header">
+
+    <div class="header-inner">
+
+
+        <!-- LOGO -->
+
+        <a class="logo" href="#">
+
+            <div class="logo-symbol">
+                🛒
+            </div>
+
+            <div class="logo-text">
+                Your <span>Ration</span>
+            </div>
+
+        </a>
+
+
+        <!-- SEARCH AREA -->
+
+        <div>
+
+            <div class="location">
+
+                <span class="location-pin">●</span>
+
+                <span>
+                    Delivering to
+                    <strong>Select location</strong>
+                </span>
+
+            </div>
+
+
+            <div class="search-wrapper">
+
+                <span class="search-icon">
+                    ⌕
+                </span>
+
+                <input
+                    id="searchInput"
+                    class="search"
+                    type="search"
+                    placeholder="Search for rice, atta, milk, snacks..."
+                    autocomplete="off"
+                >
+
+            </div>
+
         </div>
 
-        <div class="account">
-            👤
+
+        <!-- ACTIONS -->
+
+        <div class="header-actions">
+
+            <button
+                class="icon-button"
+                onclick="showToast('Wishlist coming soon')"
+                aria-label="Wishlist"
+            >
+                ♡
+            </button>
+
+
+            <button
+                class="account-button"
+                onclick="showToast('Account system coming in Phase 2')"
+            >
+
+                <span>👤</span>
+
+                <span>Account</span>
+
+            </button>
+
         </div>
 
-    </div>
-
-    <div class="location">
-        📍 Delivering to <strong>Select your location</strong>
-    </div>
-
-    <div class="search-box">
-
-        <span>🔍</span>
-
-        <input
-            type="text"
-            placeholder="Search for rice, atta, biscuits..."
-        >
 
     </div>
 
 </header>
 
 
-<!-- HERO -->
+<!-- ======================================================
+     MAIN
+     ====================================================== -->
 
-<div class="hero">
+<main class="main">
 
-    <h1>
-        Get Your Ration<br>
-        in Just 30 Minutes
-    </h1>
 
-    <p>
-        Groceries, snacks and daily essentials
-        delivered quickly to your doorstep.
-    </p>
+<!-- ======================================================
+     HERO
+     ====================================================== -->
 
-    <div class="shop-btn">
-        Shop Now →
+<section class="hero">
+
+    <div class="hero-content">
+
+        <div class="hero-tag">
+            ⚡ QUICK COMMERCE FOR EVERYDAY RATION
+        </div>
+
+
+        <h1>
+            Your daily essentials.
+            <span>Delivered fast.</span>
+        </h1>
+
+
+        <p class="hero-description">
+
+            From rice and atta to snacks and household
+            essentials — get what your home needs,
+            delivered right to your doorstep.
+
+        </p>
+
+
+        <div class="hero-buttons">
+
+            <button
+                class="primary-button"
+                onclick="document.getElementById('products').scrollIntoView()"
+            >
+                Shop groceries →
+            </button>
+
+
+            <button
+                class="secondary-button"
+                onclick="showToast('Location service coming in Phase 3')"
+            >
+                📍 Check delivery
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="hero-decoration"></div>
+
+</section>
+
+
+<!-- ======================================================
+     TRUST BAR
+     ====================================================== -->
+
+<div class="trust-bar">
+
+    <div class="trust-item">
+
+        <span class="trust-icon">⚡</span>
+
+        <span>
+            30-minute delivery
+        </span>
+
+    </div>
+
+
+    <div class="trust-item">
+
+        <span class="trust-icon">✓</span>
+
+        <span>
+            Fresh everyday essentials
+        </span>
+
+    </div>
+
+
+    <div class="trust-item">
+
+        <span class="trust-icon">₹</span>
+
+        <span>
+            Great prices & offers
+        </span>
+
     </div>
 
 </div>
 
 
-<!-- CATEGORIES -->
+<!-- ======================================================
+     CATEGORIES
+     ====================================================== -->
 
-<section>
+<section class="section">
 
-    <div class="section-title">
+    <div class="section-header">
 
-        <h2>Shop by Category</h2>
+        <div>
 
-        <a>View All</a>
+            <h2 class="section-title">
+                Shop by category
+            </h2>
+
+            <p class="section-subtitle">
+                Everything your household needs
+            </p>
+
+        </div>
+
+
+        <a
+            href="#products"
+            class="view-all"
+        >
+            View all →
+        </a>
 
     </div>
 
 
-    <div class="categories">
-
-        <div class="category">
-            <div class="category-icon">🍚</div>
-            <p>Rice</p>
-        </div>
-
-        <div class="category">
-            <div class="category-icon">🌾</div>
-            <p>Grains</p>
-        </div>
-
-        <div class="category">
-            <div class="category-icon">🥫</div>
-            <p>Dal</p>
-        </div>
-
-        <div class="category">
-            <div class="category-icon">🍪</div>
-            <p>Snacks</p>
-        </div>
-
-        <div class="category">
-            <div class="category-icon">🥛</div>
-            <p>Dairy</p>
-        </div>
-
-        <div class="category">
-            <div class="category-icon">🧴</div>
-            <p>Household</p>
-        </div>
-
-    </div>
-
-</section>
+    <div class="category-grid">
 
 
-<!-- MOST PURCHASED -->
+        <div
+            class="category-card"
+            onclick="filterCategory('Rice')"
+        >
 
-<section>
-
-    <div class="section-title">
-
-        <h2>🔥 Most Purchased</h2>
-
-        <a>See All</a>
-
-    </div>
-
-
-    <div class="products">
-
-
-        <div class="product">
-
-            <div class="discount">
-                20% OFF
-            </div>
-
-            <div class="product-image">
+            <div class="category-icon">
                 🍚
             </div>
 
-            <div class="product-name">
-                Premium Basmati Rice
-            </div>
-
-            <div class="product-weight">
-                5 kg
-            </div>
-
-            <div class="price-row">
-
-                <div>
-                    <span class="price">₹499</span>
-                    <span class="old-price">₹625</span>
-                </div>
-
-                <button class="add-btn">
-                    ADD
-                </button>
-
+            <div class="category-name">
+                Rice
             </div>
 
         </div>
 
 
-        <div class="product">
+        <div
+            class="category-card"
+            onclick="filterCategory('Grains')"
+        >
 
-            <div class="discount">
-                15% OFF
-            </div>
-
-            <div class="product-image">
+            <div class="category-icon">
                 🌾
             </div>
 
-            <div class="product-name">
-                Whole Wheat Atta
-            </div>
-
-            <div class="product-weight">
-                5 kg
-            </div>
-
-            <div class="price-row">
-
-                <div>
-                    <span class="price">₹269</span>
-                    <span class="old-price">₹315</span>
-                </div>
-
-                <button class="add-btn">
-                    ADD
-                </button>
-
+            <div class="category-name">
+                Grains
             </div>
 
         </div>
 
 
-        <div class="product">
+        <div
+            class="category-card"
+            onclick="filterCategory('Dal')"
+        >
 
-            <div class="discount">
-                18% OFF
+            <div class="category-icon">
+                🫘
             </div>
 
-            <div class="product-image">
-                🥫
-            </div>
-
-            <div class="product-name">
-                Toor Dal
-            </div>
-
-            <div class="product-weight">
-                1 kg
-            </div>
-
-            <div class="price-row">
-
-                <div>
-                    <span class="price">₹149</span>
-                    <span class="old-price">₹182</span>
-                </div>
-
-                <button class="add-btn">
-                    ADD
-                </button>
-
+            <div class="category-name">
+                Dal & Pulses
             </div>
 
         </div>
 
 
-        <div class="product">
+        <div
+            class="category-card"
+            onclick="filterCategory('Snacks')"
+        >
 
-            <div class="discount">
-                25% OFF
-            </div>
-
-            <div class="product-image">
+            <div class="category-icon">
                 🍪
             </div>
 
-            <div class="product-name">
-                Assorted Biscuits
+            <div class="category-name">
+                Snacks
             </div>
 
-            <div class="product-weight">
-                800 g
+        </div>
+
+
+        <div
+            class="category-card"
+            onclick="filterCategory('Dairy')"
+        >
+
+            <div class="category-icon">
+                🥛
             </div>
 
-            <div class="price-row">
+            <div class="category-name">
+                Dairy
+            </div>
 
-                <div>
-                    <span class="price">₹120</span>
-                    <span class="old-price">₹160</span>
-                </div>
+        </div>
 
-                <button class="add-btn">
-                    ADD
-                </button>
 
+        <div
+            class="category-card"
+            onclick="filterCategory('Oil')"
+        >
+
+            <div class="category-icon">
+                🫙
+            </div>
+
+            <div class="category-name">
+                Oil & Ghee
+            </div>
+
+        </div>
+
+
+        <div
+            class="category-card"
+            onclick="filterCategory('Household')"
+        >
+
+            <div class="category-icon">
+                🧹
+            </div>
+
+            <div class="category-name">
+                Household
+            </div>
+
+        </div>
+
+
+        <div
+            class="category-card"
+            onclick="filterCategory('Personal Care')"
+        >
+
+            <div class="category-icon">
+                🧴
+            </div>
+
+            <div class="category-name">
+                Personal Care
             </div>
 
         </div>
@@ -593,124 +1582,607 @@
 </section>
 
 
-<!-- BIGGEST DISCOUNTS -->
+<!-- ======================================================
+     MOST PURCHASED
+     ====================================================== -->
 
-<section>
+<section
+    class="section"
+    id="products"
+>
 
-    <div class="section-title">
+    <div class="section-header">
 
-        <h2>💥 Biggest Discounts</h2>
+        <div>
 
-        <a>View All</a>
+            <h2 class="section-title">
+                Most purchased
+            </h2>
+
+            <p class="section-subtitle">
+                Popular choices from Your Ration customers
+            </p>
+
+        </div>
+
+
+        <a class="view-all">
+            Popular →
+        </a>
 
     </div>
 
 
-    <div class="products">
+    <div
+        class="product-grid"
+        id="productGrid"
+    >
 
-        <div class="product">
-
-            <div class="discount">
-                30% OFF
-            </div>
-
-            <div class="product-image">
-                🛢️
-            </div>
-
-            <div class="product-name">
-                Sunflower Cooking Oil
-            </div>
-
-            <div class="product-weight">
-                1 L
-            </div>
-
-            <div class="price-row">
-
-                <div>
-                    <span class="price">₹115</span>
-                    <span class="old-price">₹165</span>
-                </div>
-
-                <button class="add-btn">
-                    ADD
-                </button>
-
-            </div>
-
-        </div>
-
-
-        <div class="product">
-
-            <div class="discount">
-                35% OFF
-            </div>
-
-            <div class="product-image">
-                🧼
-            </div>
-
-            <div class="product-name">
-                Family Bath Soap Pack
-            </div>
-
-            <div class="product-weight">
-                4 × 100 g
-            </div>
-
-            <div class="price-row">
-
-                <div>
-                    <span class="price">₹99</span>
-                    <span class="old-price">₹152</span>
-                </div>
-
-                <button class="add-btn">
-                    ADD
-                </button>
-
-            </div>
-
-        </div>
+        <!-- PRODUCTS GENERATED BY JAVASCRIPT -->
 
     </div>
 
 </section>
 
 
-<!-- BOTTOM NAV -->
+<!-- ======================================================
+     PROMOTIONS
+     ====================================================== -->
 
-<nav class="bottom-nav">
+<section class="section">
 
-    <div class="nav-item active">
-        <div>🏠</div>
-        Home
+    <div class="promo-grid">
+
+
+        <div class="promo green">
+
+            <h3>
+                Save more on your weekly ration
+            </h3>
+
+            <p>
+                Discover better prices on everyday
+                household essentials.
+            </p>
+
+            <div class="promo-icon">
+                🛍️
+            </div>
+
+        </div>
+
+
+        <div class="promo yellow">
+
+            <h3>
+                Deals you'll want to grab
+            </h3>
+
+            <p>
+                New discounts added regularly.
+            </p>
+
+            <div class="promo-icon">
+                ⚡
+            </div>
+
+        </div>
+
+
     </div>
 
-    <div class="nav-item">
-        <div>🔍</div>
-        Search
-    </div>
+</section>
 
-    <div class="nav-item">
-        <div>🛒</div>
+
+</main>
+
+
+<!-- ======================================================
+     FLOATING CART
+     ====================================================== -->
+
+<button
+    class="floating-cart"
+    onclick="showToast('Cart page will be added in Phase 4')"
+>
+
+    🛒
+
+    <span>
         Cart
+    </span>
+
+    <span
+        class="cart-count"
+        id="cartCount"
+    >
+        0
+    </span>
+
+</button>
+
+
+<!-- ======================================================
+     MOBILE NAVIGATION
+     ====================================================== -->
+
+<nav class="mobile-nav">
+
+    <div class="mobile-nav-item active">
+
+        <div>⌂</div>
+
+        Home
+
     </div>
 
-    <div class="nav-item">
-        <div>📦</div>
+
+    <div
+        class="mobile-nav-item"
+        onclick="document.getElementById('searchInput').focus()"
+    >
+
+        <div>⌕</div>
+
+        Search
+
+    </div>
+
+
+    <div
+        class="mobile-nav-item"
+        onclick="showToast('Cart coming in Phase 4')"
+    >
+
+        <div>🛒</div>
+
+        Cart
+
+    </div>
+
+
+    <div
+        class="mobile-nav-item"
+        onclick="showToast('Orders coming in Phase 6')"
+    >
+
+        <div>▣</div>
+
         Orders
+
     </div>
 
-    <div class="nav-item">
-        <div>👤</div>
+
+    <div
+        class="mobile-nav-item"
+        onclick="showToast('Account coming in Phase 2')"
+    >
+
+        <div>●</div>
+
         Account
+
     </div>
 
 </nav>
 
 
+<!-- ======================================================
+     TOAST
+     ====================================================== -->
+
+<div
+    class="toast"
+    id="toast"
+></div>
+
+
+<!-- ======================================================
+     JAVASCRIPT
+     ====================================================== -->
+
+<script>
+
+/* =========================================================
+   PRODUCT DATABASE — TEMPORARY PHASE 1 DATA
+   ========================================================= */
+
+const products = [
+
+    {
+        name: "Premium Basmati Rice",
+        brand: "Your Ration Select",
+        category: "Rice",
+        weight: "5 kg",
+        price: 499,
+        oldPrice: 625,
+        discount: 20,
+        icon: "🍚"
+    },
+
+    {
+        name: "Everyday Basmati Rice",
+        brand: "Daily Choice",
+        category: "Rice",
+        weight: "5 kg",
+        price: 399,
+        oldPrice: 470,
+        discount: 15,
+        icon: "🍚"
+    },
+
+    {
+        name: "Whole Wheat Atta",
+        brand: "Daily Choice",
+        category: "Grains",
+        weight: "5 kg",
+        price: 269,
+        oldPrice: 315,
+        discount: 15,
+        icon: "🌾"
+    },
+
+    {
+        name: "Multigrain Atta",
+        brand: "Healthy Kitchen",
+        category: "Grains",
+        weight: "5 kg",
+        price: 349,
+        oldPrice: 420,
+        discount: 17,
+        icon: "🌾"
+    },
+
+    {
+        name: "Toor Dal",
+        brand: "Your Ration Select",
+        category: "Dal",
+        weight: "1 kg",
+        price: 149,
+        oldPrice: 182,
+        discount: 18,
+        icon: "🫘"
+    },
+
+    {
+        name: "Moong Dal",
+        brand: "Daily Choice",
+        category: "Dal",
+        weight: "1 kg",
+        price: 139,
+        oldPrice: 165,
+        discount: 16,
+        icon: "🫘"
+    },
+
+    {
+        name: "Sunflower Cooking Oil",
+        brand: "Kitchen Plus",
+        category: "Oil",
+        weight: "1 L",
+        price: 115,
+        oldPrice: 165,
+        discount: 30,
+        icon: "🫙"
+    },
+
+    {
+        name: "Mustard Cooking Oil",
+        brand: "Kitchen Plus",
+        category: "Oil",
+        weight: "1 L",
+        price: 129,
+        oldPrice: 169,
+        discount: 24,
+        icon: "🫙"
+    },
+
+    {
+        name: "Assorted Biscuits",
+        brand: "Family Pack",
+        category: "Snacks",
+        weight: "800 g",
+        price: 120,
+        oldPrice: 160,
+        discount: 25,
+        icon: "🍪"
+    },
+
+    {
+        name: "Classic Namkeen",
+        brand: "Snack Time",
+        category: "Snacks",
+        weight: "400 g",
+        price: 89,
+        oldPrice: 110,
+        discount: 19,
+        icon: "🥨"
+    },
+
+    {
+        name: "Fresh Full Cream Milk",
+        brand: "Daily Dairy",
+        category: "Dairy",
+        weight: "1 L",
+        price: 68,
+        oldPrice: 72,
+        discount: 5,
+        icon: "🥛"
+    },
+
+    {
+        name: "Family Bath Soap Pack",
+        brand: "Home Care",
+        category: "Personal Care",
+        weight: "4 × 100 g",
+        price: 99,
+        oldPrice: 152,
+        discount: 35,
+        icon: "🧼"
+    },
+
+    {
+        name: "Liquid Dishwash",
+        brand: "Home Care",
+        category: "Household",
+        weight: "750 ml",
+        price: 119,
+        oldPrice: 155,
+        discount: 23,
+        icon: "🧴"
+    },
+
+    {
+        name: "Premium Sugar",
+        brand: "Daily Choice",
+        category: "Grains",
+        weight: "5 kg",
+        price: 239,
+        oldPrice: 270,
+        discount: 11,
+        icon: "🍚"
+    },
+
+    {
+        name: "Red Chilli Powder",
+        brand: "Kitchen Spice",
+        category: "Grains",
+        weight: "200 g",
+        price: 79,
+        oldPrice: 99,
+        discount: 20,
+        icon: "🌶️"
+    }
+
+];
+
+
+/* =========================================================
+   CART
+   ========================================================= */
+
+let cartCount = 0;
+
+
+/* =========================================================
+   RENDER PRODUCTS
+   ========================================================= */
+
+function renderProducts(list = products) {
+
+    const grid =
+        document.getElementById("productGrid");
+
+    if (list.length === 0) {
+
+        grid.innerHTML = `
+            <div class="empty-state">
+                <div style="font-size:40px;margin-bottom:10px;">
+                    🔎
+                </div>
+
+                <strong>
+                    No products found
+                </strong>
+
+                <p style="margin-top:5px;">
+                    Try another search.
+                </p>
+            </div>
+        `;
+
+        return;
+    }
+
+
+    grid.innerHTML = list.map(product => `
+
+        <article class="product-card">
+
+            <div class="discount-badge">
+                ${product.discount}% OFF
+            </div>
+
+
+            <div class="product-image">
+                ${product.icon}
+            </div>
+
+
+            <div class="product-brand">
+                ${product.brand}
+            </div>
+
+
+            <div class="product-name">
+                ${product.name}
+            </div>
+
+
+            <div class="product-weight">
+                ${product.weight}
+            </div>
+
+
+            <div class="product-bottom">
+
+                <div>
+
+                    <span class="product-price">
+                        ₹${product.price}
+                    </span>
+
+                    <span class="original-price">
+                        ₹${product.oldPrice}
+                    </span>
+
+                </div>
+
+
+                <button
+                    class="add-button"
+                    onclick="addToCart('${product.name}')"
+                >
+                    ADD
+                </button>
+
+            </div>
+
+        </article>
+
+    `).join("");
+
+}
+
+
+/* =========================================================
+   ADD TO CART
+   ========================================================= */
+
+function addToCart(productName) {
+
+    cartCount++;
+
+    document.getElementById("cartCount")
+        .textContent = cartCount;
+
+    showToast(
+        productName + " added to cart"
+    );
+
+}
+
+
+/* =========================================================
+   SEARCH
+   ========================================================= */
+
+document
+    .getElementById("searchInput")
+    .addEventListener("input", function () {
+
+        const query =
+            this.value
+                .toLowerCase()
+                .trim();
+
+
+        const filtered =
+            products.filter(product =>
+
+                product.name
+                    .toLowerCase()
+                    .includes(query)
+
+                ||
+
+                product.category
+                    .toLowerCase()
+                    .includes(query)
+
+                ||
+
+                product.brand
+                    .toLowerCase()
+                    .includes(query)
+
+            );
+
+
+        renderProducts(filtered);
+
+    });
+
+
+/* =========================================================
+   CATEGORY FILTER
+   ========================================================= */
+
+function filterCategory(category) {
+
+    const filtered =
+        products.filter(
+            product =>
+                product.category === category
+        );
+
+
+    renderProducts(filtered);
+
+
+    document
+        .getElementById("products")
+        .scrollIntoView({
+            behavior: "smooth"
+        });
+
+
+    showToast(
+        category + " products"
+    );
+
+}
+
+
+/* =========================================================
+   TOAST
+   ========================================================= */
+
+let toastTimer;
+
+
+function showToast(message) {
+
+    const toast =
+        document.getElementById("toast");
+
+
+    toast.textContent = message;
+
+    toast.classList.add("show");
+
+
+    clearTimeout(toastTimer);
+
+
+    toastTimer =
+        setTimeout(() => {
+
+            toast.classList.remove("show");
+
+        }, 2200);
+
+}
+
+
+/* =========================================================
+   INITIAL LOAD
+   ========================================================= */
+
+renderProducts();
+
+</script>
+
+
 </body>
-                          </html>
+</html>
