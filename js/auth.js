@@ -1,17 +1,12 @@
 // ==========================================
-// YOUR RATION — FIREBASE AUTHENTICATION
+// YOUR RATION — AUTHENTICATION
 // ==========================================
 
-const FIREBASE_SDK = "12.19.0";
-
+const FIREBASE_VERSION = "12.5.0";
 let auth = null;
-let firebaseReady = false;
-let firebaseLoadError = null;
-let firebaseModules = null;
-
-// ------------------------------------------
-// PUBLIC UI ENTRY
-// ------------------------------------------
+let firebaseAuth = null;
+let firebaseStarted = false;
+let firebaseError = null;
 
 function openAuth() {
     let modal = document.getElementById("authModal");
@@ -24,9 +19,9 @@ function openAuth() {
     modal.classList.add("open");
     showLoginMode();
 
-    if (firebaseLoadError) {
+    if (firebaseError) {
         setAuthMessage(
-            "Authentication could not start. Please refresh the page and try again.",
+            "Authentication could not start. Please refresh the page.",
             "error"
         );
     }
@@ -37,20 +32,14 @@ function closeAuth() {
     if (modal) modal.classList.remove("open");
 }
 
-// ------------------------------------------
-// AUTH MODAL
-// ------------------------------------------
-
 function createAuthModal() {
     const modal = document.createElement("div");
-
     modal.id = "authModal";
     modal.className = "auth-overlay";
 
     modal.innerHTML = `
-        <div class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="authTitle">
-            <button class="auth-close" id="authClose" type="button" aria-label="Close">×</button>
-
+        <div class="auth-modal" role="dialog" aria-modal="true">
+            <button class="auth-close" id="authClose" type="button">×</button>
             <div class="auth-logo">YR</div>
 
             <h2 id="authTitle">Welcome back</h2>
@@ -60,23 +49,15 @@ function createAuthModal() {
 
             <form id="loginForm">
                 <label for="loginEmail">Email</label>
-                <input
-                    type="email"
-                    id="loginEmail"
+                <input id="loginEmail" type="email"
                     placeholder="Enter your email"
-                    autocomplete="email"
-                    required
-                >
+                    autocomplete="email" required>
 
                 <label for="loginPassword">Password</label>
-                <input
-                    type="password"
-                    id="loginPassword"
+                <input id="loginPassword" type="password"
                     placeholder="Enter your password"
                     autocomplete="current-password"
-                    minlength="6"
-                    required
-                >
+                    minlength="6" required>
 
                 <button class="auth-main-button" type="submit">
                     Sign In
@@ -89,33 +70,21 @@ function createAuthModal() {
 
             <form id="signupForm" class="hidden">
                 <label for="signupName">Name</label>
-                <input
-                    type="text"
-                    id="signupName"
+                <input id="signupName" type="text"
                     placeholder="Your name"
                     autocomplete="name"
-                    maxlength="80"
-                    required
-                >
+                    maxlength="80" required>
 
                 <label for="signupEmail">Email</label>
-                <input
-                    type="email"
-                    id="signupEmail"
+                <input id="signupEmail" type="email"
                     placeholder="Enter your email"
-                    autocomplete="email"
-                    required
-                >
+                    autocomplete="email" required>
 
                 <label for="signupPassword">Password</label>
-                <input
-                    type="password"
-                    id="signupPassword"
+                <input id="signupPassword" type="password"
                     placeholder="Create a password"
                     autocomplete="new-password"
-                    minlength="6"
-                    required
-                >
+                    minlength="6" required>
 
                 <button class="auth-main-button" type="submit">
                     Create Account
@@ -139,7 +108,7 @@ function createAuthModal() {
 
     document.body.appendChild(modal);
 
-    document.getElementById("authClose").addEventListener("click", closeAuth);
+    document.getElementById("authClose").onclick = closeAuth;
 
     modal.addEventListener("click", event => {
         if (event.target === modal) closeAuth();
@@ -147,57 +116,52 @@ function createAuthModal() {
 
     document.getElementById("loginForm").addEventListener("submit", handleLogin);
     document.getElementById("signupForm").addEventListener("submit", handleSignup);
-    document.getElementById("googleLogin").addEventListener("click", handleGoogleLogin);
-    document.getElementById("forgotPassword").addEventListener("click", handleForgotPassword);
-    document.getElementById("authSwitch").addEventListener("click", toggleAuthMode);
+    document.getElementById("googleLogin").onclick = handleGoogleLogin;
+    document.getElementById("forgotPassword").onclick = handleForgotPassword;
+    document.getElementById("authSwitch").onclick = toggleAuthMode;
 }
 
-// ------------------------------------------
-// FIREBASE LOADING
-// ------------------------------------------
-
-async function loadFirebase() {
-    if (firebaseReady) return true;
+async function startFirebase() {
+    if (firebaseStarted) return true;
 
     try {
         const appModule = await import(
-            `https://www.gstatic.com/firebasejs/${FIREBASE_SDK}/firebase-app.js`
+            "https://www.gstatic.com/firebasejs/" +
+            FIREBASE_VERSION +
+            "/firebase-app.js"
         );
 
         const authModule = await import(
-            `https://www.gstatic.com/firebasejs/${FIREBASE_SDK}/firebase-auth.js`
+            "https://www.gstatic.com/firebasejs/" +
+            FIREBASE_VERSION +
+            "/firebase-auth.js"
         );
 
         const configModule = await import("./firebase.js");
 
-        const firebaseApp = appModule.initializeApp(configModule.firebaseConfig);
+        const app = appModule.initializeApp(configModule.firebaseConfig);
 
-        auth = authModule.getAuth(firebaseApp);
-        firebaseModules = authModule;
-        firebaseReady = true;
+        auth = authModule.getAuth(app);
+        firebaseAuth = authModule;
+        firebaseStarted = true;
 
         authModule.onAuthStateChanged(auth, updateAccountUI);
 
         return true;
     } catch (error) {
-        firebaseLoadError = error;
-        console.error("Your Ration Firebase initialization failed:", error);
-        setAuthMessage(
-            "Firebase could not be loaded. Check the browser console for the exact error.",
-            "error"
-        );
+        firebaseError = error;
+        console.error("YOUR RATION FIREBASE ERROR:", error);
         return false;
     }
 }
 
-// ------------------------------------------
-// LOGIN
-// ------------------------------------------
-
 async function handleLogin(event) {
     event.preventDefault();
 
-    if (!(await loadFirebase())) return;
+    if (!(await startFirebase())) {
+        setAuthMessage("Firebase could not be loaded. Check Console.", "error");
+        return;
+    }
 
     const email = document.getElementById("loginEmail").value.trim();
     const password = document.getElementById("loginPassword").value;
@@ -205,43 +169,37 @@ async function handleLogin(event) {
     setAuthMessage("Signing in...", "normal");
 
     try {
-        const result = await firebaseModules.signInWithEmailAndPassword(
-            auth,
-            email,
-            password
+        const result = await firebaseAuth.signInWithEmailAndPassword(
+            auth, email, password
         );
 
-        const user = result.user;
-
-        if (!user.emailVerified) {
+        if (!result.user.emailVerified) {
             setAuthMessage(
-                "Your email is not verified yet. We sent another verification email.",
+                "Please verify your email first. A new verification email was sent.",
                 "error"
             );
 
             try {
-                await firebaseModules.sendEmailVerification(user);
+                await firebaseAuth.sendEmailVerification(result.user);
             } catch (_) {}
 
             return;
         }
 
         setAuthMessage("Login successful.", "success");
-
         setTimeout(closeAuth, 700);
     } catch (error) {
         setAuthMessage(getFirebaseError(error), "error");
     }
 }
 
-// ------------------------------------------
-// SIGN UP
-// ------------------------------------------
-
 async function handleSignup(event) {
     event.preventDefault();
 
-    if (!(await loadFirebase())) return;
+    if (!(await startFirebase())) {
+        setAuthMessage("Firebase could not be loaded. Check Console.", "error");
+        return;
+    }
 
     const name = document.getElementById("signupName").value.trim();
     const email = document.getElementById("signupEmail").value.trim();
@@ -250,26 +208,24 @@ async function handleSignup(event) {
     setAuthMessage("Creating your account...", "normal");
 
     try {
-        const result = await firebaseModules.createUserWithEmailAndPassword(
-            auth,
-            email,
-            password
+        const result = await firebaseAuth.createUserWithEmailAndPassword(
+            auth, email, password
         );
-
-        const user = result.user;
 
         localStorage.setItem("yourRationUserName", name);
 
         if (name) {
-            await firebaseModules.updateProfile(user, {
-                displayName: name
-            });
+            try {
+                await firebaseAuth.updateProfile(result.user, {
+                    displayName: name
+                });
+            } catch (_) {}
         }
 
-        await firebaseModules.sendEmailVerification(user);
+        await firebaseAuth.sendEmailVerification(result.user);
 
         setAuthMessage(
-            "Account created. Check your email and verify your address before signing in.",
+            "Account created. Check your email and verify it.",
             "success"
         );
 
@@ -279,18 +235,17 @@ async function handleSignup(event) {
     }
 }
 
-// ------------------------------------------
-// GOOGLE LOGIN
-// ------------------------------------------
-
 async function handleGoogleLogin() {
-    if (!(await loadFirebase())) return;
+    if (!(await startFirebase())) {
+        setAuthMessage("Firebase could not be loaded. Check Console.", "error");
+        return;
+    }
 
     setAuthMessage("Opening Google sign-in...", "normal");
 
     try {
-        const provider = new firebaseModules.GoogleAuthProvider();
-        const result = await firebaseModules.signInWithPopup(auth, provider);
+        const provider = new firebaseAuth.GoogleAuthProvider();
+        const result = await firebaseAuth.signInWithPopup(auth, provider);
 
         if (result.user) {
             setAuthMessage("Google sign-in successful.", "success");
@@ -301,107 +256,89 @@ async function handleGoogleLogin() {
     }
 }
 
-// ------------------------------------------
-// PASSWORD RESET
-// ------------------------------------------
-
 async function handleForgotPassword() {
-    if (!(await loadFirebase())) return;
+    if (!(await startFirebase())) {
+        setAuthMessage("Firebase could not be loaded. Check Console.", "error");
+        return;
+    }
 
     const email = document.getElementById("loginEmail").value.trim();
 
     if (!email) {
-        setAuthMessage("Enter your email first, then choose Forgot password.", "error");
+        setAuthMessage("Enter your email first.", "error");
         document.getElementById("loginEmail").focus();
         return;
     }
 
-    setAuthMessage("Sending password reset email...", "normal");
+    setAuthMessage("Sending reset email...", "normal");
 
     try {
-        await firebaseModules.sendPasswordResetEmail(auth, email);
-        setAuthMessage(
-            "Password reset email sent. Check your inbox.",
-            "success"
-        );
+        await firebaseAuth.sendPasswordResetEmail(auth, email);
+        setAuthMessage("Password reset email sent.", "success");
     } catch (error) {
         setAuthMessage(getFirebaseError(error), "error");
     }
 }
 
-// ------------------------------------------
-// LOGOUT
-// ------------------------------------------
-
 async function logoutUser() {
-    if (!(await loadFirebase())) return;
+    if (!(await startFirebase())) return;
 
     try {
-        await firebaseModules.signOut(auth);
-        showToastSafe("You have been signed out.");
+        await firebaseAuth.signOut(auth);
         updateAccountUI(null);
+        if (typeof window.showToast === "function") {
+            window.showToast("You have been signed out.");
+        }
     } catch (error) {
         console.error(error);
     }
 }
 
-// ------------------------------------------
-// ACCOUNT BUTTON
-// ------------------------------------------
-
 function updateAccountUI(user) {
-    const accountButton = document.querySelector(".header-action");
-    if (!accountButton) return;
+    const button = document.querySelector(".header-action");
+    if (!button) return;
 
     if (user) {
-        accountButton.textContent = "✓";
-        accountButton.title = user.displayName || user.email || "Your Account";
-        accountButton.setAttribute("aria-label", "Your account");
-
-        accountButton.onclick = () => {
+        button.textContent = "✓";
+        button.title = user.displayName || user.email || "Account";
+        button.onclick = () => {
             const name =
                 user.displayName ||
                 localStorage.getItem("yourRationUserName") ||
                 "Your Account";
 
-            const shouldLogout = confirm(
-                `${name}\n\nSigned in as:\n${user.email}\n\nPress OK to sign out.`
-            );
-
-            if (shouldLogout) logoutUser();
+            if (confirm(
+                name + "\n\nSigned in as:\n" +
+                user.email + "\n\nPress OK to sign out."
+            )) {
+                logoutUser();
+            }
         };
     } else {
-        accountButton.textContent = "👤";
-        accountButton.title = "Sign in";
-        accountButton.setAttribute("aria-label", "Sign in");
-        accountButton.onclick = openAuth;
+        button.textContent = "👤";
+        button.title = "Sign in";
+        button.onclick = openAuth;
     }
 }
 
-// ------------------------------------------
-// LOGIN / SIGNUP SWITCH
-// ------------------------------------------
-
 function toggleAuthMode() {
-    const loginForm = document.getElementById("loginForm");
-    const signupForm = document.getElementById("signupForm");
+    const login = document.getElementById("loginForm");
+    const signup = document.getElementById("signupForm");
     const title = document.getElementById("authTitle");
     const subtitle = document.getElementById("authSubtitle");
     const switchButton = document.getElementById("authSwitch");
 
-    const signupVisible = !signupForm.classList.contains("hidden");
+    const signupVisible = !signup.classList.contains("hidden");
 
     if (signupVisible) {
-        signupForm.classList.add("hidden");
-        loginForm.classList.remove("hidden");
-
+        signup.classList.add("hidden");
+        login.classList.remove("hidden");
         title.textContent = "Welcome back";
         subtitle.textContent = "Sign in to continue shopping.";
         switchButton.textContent = "Create a new account";
     } else {
-        loginForm.classList.add("hidden");
-        signupForm.classList.remove("hidden");
-
+        login.classList.add("hidden");
+        signup.classList.remove("hidden");
         title.textContent = "Create your account";
         subtitle.textContent = "Join Your Ration and start shopping.";
         switchButton.textContent = "Already have an account? Sign in";
@@ -411,51 +348,31 @@ function toggleAuthMode() {
 }
 
 function showLoginMode() {
-    const loginForm = document.getElementById("loginForm");
-    const signupForm = document.getElementById("signupForm");
+    const login = document.getElementById("loginForm");
+    const signup = document.getElementById("signupForm");
 
-    if (!loginForm || !signupForm) return;
+    if (!login || !signup) return;
 
-    loginForm.classList.remove("hidden");
-    signupForm.classList.add("hidden");
+    login.classList.remove("hidden");
+    signup.classList.add("hidden");
 
     document.getElementById("authTitle").textContent = "Welcome back";
     document.getElementById("authSubtitle").textContent =
         "Sign in to continue shopping.";
     document.getElementById("authSwitch").textContent =
         "Create a new account";
-
-    setAuthMessage("", "normal");
 }
-
-// ------------------------------------------
-// HELPERS
-// ------------------------------------------
 
 function setAuthMessage(message, type) {
     const element = document.getElementById("authMessage");
     if (!element) return;
 
     element.textContent = message;
-    element.className = `auth-message ${type || "normal"}`;
-}
-
-function showToastSafe(message) {
-    if (typeof window.showToast === "function") {
-        window.showToast(message);
-        return;
-    }
-
-    const toast = document.createElement("div");
-    toast.className = "ration-toast show";
-    toast.textContent = message;
-    document.body.appendChild(toast);
-
-    setTimeout(() => toast.remove(), 2200);
+    element.className = "auth-message " + (type || "normal");
 }
 
 function getFirebaseError(error) {
-    const code = error?.code || "";
+    const code = error && error.code ? error.code : "";
 
     const messages = {
         "auth/invalid-credential": "Email or password is incorrect.",
@@ -466,36 +383,29 @@ function getFirebaseError(error) {
         "auth/too-many-requests": "Too many attempts. Please wait and try again.",
         "auth/popup-closed-by-user": "Google sign-in was cancelled.",
         "auth/popup-blocked": "Your browser blocked the Google sign-in window.",
-        "auth/popup-operation-not-supported-in-this-environment":
-            "Google popup sign-in is not supported here. Try another browser.",
         "auth/unauthorized-domain":
-            "This website domain is not authorized in Firebase Authentication.",
+            "This website domain is not authorized in Firebase.",
         "auth/network-request-failed":
             "Network error. Check your internet connection.",
         "auth/operation-not-allowed":
-            "This sign-in method is not enabled in Firebase Authentication.",
-        "auth/invalid-api-key":
-            "The Firebase API key is invalid. Check Firebase project configuration."
+            "This sign-in method is not enabled in Firebase."
     };
 
-    return messages[code] || error?.message || "Something went wrong. Please try again.";
+    return messages[code] ||
+        (error && error.message) ||
+        "Something went wrong. Please try again.";
 }
 
-// ------------------------------------------
-// STARTUP
-// ------------------------------------------
-
-// Attach the account button immediately so it works even while Firebase loads.
+// Attach the button immediately.
+// This means the account icon still works even if Firebase is temporarily unavailable.
 document.addEventListener("DOMContentLoaded", () => {
     updateAccountUI(null);
 
-    // Load Firebase in the background.
-    loadFirebase().catch(error => {
-        console.error("Your Ration authentication startup error:", error);
+    startFirebase().catch(error => {
+        console.error("YOUR RATION AUTH STARTUP ERROR:", error);
     });
 });
 
-// Also expose these for the page and future checkout/account features.
 window.openAuth = openAuth;
 window.closeAuth = closeAuth;
 window.logoutUser = logoutUser;
