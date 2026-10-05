@@ -2,7 +2,7 @@
 // YOUR RATION — FIREBASE CONFIGURATION
 // ==========================================
 
-export const firebaseConfig = {
+window.yourRationFirebaseConfig = {
     apiKey: "AIzaSyBLO6qkhClw3qpRu6RukLm_Uo6rwApukxc",
     authDomain: "your-ration.firebaseapp.com",
     projectId: "your-ration",
