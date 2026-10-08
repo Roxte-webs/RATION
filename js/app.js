@@ -62,7 +62,9 @@ function bindEvents() {
     if (add) quickAdd(add.dataset.add);
 
     const view = e.target.closest("[data-product]");
-    if (view && !e.target.closest("[data-add]") && !e.target.closest(".qty-control")) openProduct(view.dataset.product);
+    if (view && !e.target.closest("button") && !e.target.closest("input") && !e.target.closest("select")) {
+      openProduct(view.dataset.product);
+    }
 
     const qty = e.target.closest("[data-qty]");
     if (qty) updateCartQty(qty.dataset.id, Number(qty.dataset.qty));
@@ -75,6 +77,15 @@ function bindEvents() {
 
     const footer = e.target.closest("[data-footer-category]");
     if (footer) selectCategory(footer.dataset.footerCategory);
+
+    const filterRemove = e.target.closest("[data-filter-key]");
+    if (filterRemove) {
+      if (filterRemove.dataset.filterKey === "category") state.category = "All";
+      if (filterRemove.dataset.filterKey === "price") state.price = "all";
+      if (filterRemove.dataset.filterKey === "discount") state.discount = "all";
+      renderCategories();
+      renderProducts();
+    }
 
     const nav = e.target.closest("[data-nav]");
     if (nav) handleMobileNav(nav.dataset.nav);
@@ -264,8 +275,33 @@ function openAccount() {
   openModal("accountModal");
 }
 
+let rationMap = null;
+let rationMarker = null;
+
+function initLocationMap() {
+  if (typeof L === "undefined" || rationMap) return;
+  const el = $("#locationMap");
+  if (!el) return;
+  el.innerHTML = "";
+  rationMap = L.map(el, {zoomControl:true, attributionControl:true}).setView([28.5355,77.2730], 12);
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    maxZoom: 19,
+    attribution: "&copy; OpenStreetMap contributors"
+  }).addTo(rationMap);
+  setTimeout(() => rationMap.invalidateSize(), 100);
+}
+
+function setMapPoint(lat,lng) {
+  initLocationMap();
+  if (!rationMap || typeof L === "undefined") return;
+  if (rationMarker) rationMarker.remove();
+  rationMarker = L.marker([lat,lng]).addTo(rationMap);
+  rationMap.setView([lat,lng], 15);
+}
+
 function openLocation() {
   openModal("locationModal");
+  initLocationMap();
   if (state.location) {
     $("#addressInput").value=state.location.address||"";
     $("#landmarkInput").value=state.location.landmark||"";
@@ -280,6 +316,7 @@ function useCurrentLocation() {
   navigator.geolocation.getCurrentPosition(pos=>{
     $("#useLocationButton").textContent="⌖ Location found";
     checkDelivery(pos.coords.latitude,pos.coords.longitude);
+    setMapPoint(pos.coords.latitude,pos.coords.longitude);
     $("#addressInput").value=$("#addressInput").value || "Current location";
   },()=>{ $("#useLocationButton").textContent="⌖ Use my current location"; showToast("Location permission was not available."); },{enableHighAccuracy:true,timeout:10000});
 }
@@ -292,6 +329,7 @@ function checkDelivery(lat,lng) {
   $("#deliveryCheck").innerHTML=supported ? `<b>✓ Delivery available</b><span>Approx. ${Math.max(10,Math.round(nearest.distance*4))}–30 min from ${escapeHtml(nearest.name)}.</span>` : `<b>Outside our current delivery range</b><span>Nearest service hub is about ${nearest.distance.toFixed(1)} km away. You can still save this location and send feedback.</span>`;
   $("#saveLocationButton").disabled=!supported;
   window.__pendingLocation={lat,lng,hub:nearest.name,supported};
+  setMapPoint(lat,lng);
 }
 function saveLocation() {
   const pending=window.__pendingLocation;
@@ -311,10 +349,10 @@ function renderFilterCategories(){
 function activeFilterCount(){return (state.category!=="All"?1:0)+(state.price!=="all"?1:0)+(state.discount!=="all"?1:0);}
 function renderActiveFilters(){
   const tags=[];
-  if(state.category!=="All") tags.push([state.category,()=>{state.category="All";renderProducts();renderCategories();}]);
-  if(state.price!=="all") tags.push([state.price==="under100"?"Under ₹100":state.price==="100to300"?"₹100–₹300":"Above ₹300",()=>{state.price="all";renderProducts();}]);
-  if(state.discount!=="all") tags.push([`${state.discount}%+ off`,()=>{state.discount="all";renderProducts();}]);
-  return tags.map(([t],i)=>`<span>${escapeHtml(t)} <button type="button" data-filter-index="${i}">×</button></span>`).join("");
+  if(state.category!=="All") tags.push([state.category,"category"]);
+  if(state.price!=="all") tags.push([state.price==="under100"?"Under ₹100":state.price==="100to300"?"₹100–₹300":"Above ₹300","price"]);
+  if(state.discount!=="all") tags.push([`${state.discount}%+ off`,"discount"]);
+  return tags.map(([t,key])=>`<span>${escapeHtml(t)} <button type="button" data-filter-key="${key}">×</button></span>`).join("");
 }
 function clearFilters(){state.category="All";state.price="all";state.discount="all";$$('input[name="priceFilter"]')[0].checked=true;$$('input[name="discountFilter"]')[0].checked=true;renderCategories();renderProducts();}
 
