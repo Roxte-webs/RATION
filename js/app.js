@@ -59,7 +59,17 @@ function bindEvents() {
     if (closeModalBtn) closeModal(closeModalBtn.dataset.closeModal);
 
     const add = e.target.closest("[data-add]");
-    if (add) quickAdd(add.dataset.add);
+    if (add) {
+      quickAdd(add.dataset.add);
+      if (add.dataset.closeModal) closeModal(add.dataset.closeModal);
+    }
+
+    const quickView = e.target.closest(".quick-view");
+    if (quickView) {
+      const card = quickView.closest("[data-product]");
+      if (card) openProduct(card.dataset.product);
+      return;
+    }
 
     const view = e.target.closest("[data-product]");
     if (view && !e.target.closest("button") && !e.target.closest("input") && !e.target.closest("select")) {
