@@ -1,369 +1,221 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
 <head>
-
-    <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <meta
-        name="description"
-        content="Your Ration — Get Your Ration in Just 30 Minutes."
-    >
-
-    <title>Your Ration | Get Your Ration in Just 30 Minutes</title>
-
-    <!-- Fonts -->
-    <link
-        rel="preconnect"
-        href="https://fonts.googleapis.com"
-    >
-
-    <link
-        rel="preconnect"
-        href="https://fonts.gstatic.com"
-        crossorigin
-    >
-
-    <link
-        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&family=Manrope:wght@600;700;800&display=swap"
-        rel="stylesheet"
-    >
-
-    <!-- Main CSS -->
-    <link
-        rel="stylesheet"
-        href="css/style.css"
-    >
-
-    <link
-        rel="icon"
-        type="image/svg+xml"
-        href="favicon.svg"
-    >
-
-
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#123b2a">
+  <meta name="description" content="Your Ration — groceries and daily essentials delivered fast.">
+  <title>Your Ration — Fast Grocery Delivery</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
 </head>
-
 <body>
+  <div id="topProgress" class="top-progress"></div>
 
-    <!-- ================= HEADER ================= -->
+  <header class="site-header">
+    <div class="header-main container">
+      <a class="brand" href="#" aria-label="Your Ration home">
+        <span class="brand-mark">YR</span>
+        <span class="brand-copy"><b>Your Ration</b><small>Daily essentials, delivered.</small></span>
+      </a>
 
-    <header class="site-header">
+      <button class="location-button" id="locationButton" type="button">
+        <span class="pin-icon">⌖</span>
+        <span class="location-copy"><small>DELIVER TO</small><b id="locationLabel">Choose location</b></span>
+        <span class="chevron">⌄</span>
+      </button>
 
-        <div class="header-inner">
+      <div class="desktop-search search-shell">
+        <span>⌕</span>
+        <input id="searchInput" type="search" autocomplete="off" placeholder="Search for rice, atta, snacks & more">
+        <button id="clearSearch" class="search-clear" type="button" aria-label="Clear search">×</button>
+      </div>
 
-            <a
-                href="#"
-                class="logo"
-            >
+      <div class="header-actions">
+        <button class="icon-button account-button" id="accountButton" type="button" aria-label="Account">♙</button>
+        <button class="cart-button" id="cartButton" type="button">
+          <span>Cart</span><b id="cartCount">0</b>
+        </button>
+      </div>
+    </div>
 
-                <div class="logo-mark">
-                    YR
-                </div>
+    <div class="mobile-search container search-shell">
+      <span>⌕</span>
+      <input id="mobileSearchInput" type="search" autocomplete="off" placeholder="Search groceries and essentials">
+      <button id="mobileClearSearch" class="search-clear" type="button">×</button>
+    </div>
 
-                <div class="logo-text">
+    <div class="category-strip">
+      <div class="container category-scroll" id="categoryStrip"></div>
+    </div>
+  </header>
 
-                    <strong>
-                        Your Ration
-                    </strong>
-
-                    <span>
-                        Fresh • Fast • Reliable
-                    </span>
-
-                </div>
-
-            </a>
-
-
-            <div class="search-box">
-
-                <span class="search-icon">
-                    🔎
-                </span>
-
-                <input
-                    type="search"
-                    id="searchInput"
-                    placeholder="Search rice, atta, dal, snacks..."
-                    autocomplete="off"
-                >
-
-            </div>
-
-
-            <div class="header-actions">
-
-                <button
-                    class="header-action"
-                    title="Account"
-                    type="button"
-                >
-                    👤
-                </button>
-
-                <button
-                    class="cart-button"
-                    id="cartButton"
-                    data-cart-button
-                    type="button"
-                >
-
-                    🛒
-
-                    <span class="cart-text">
-                        Cart
-                    </span>
-
-                    <span
-                        class="cart-count"
-                        id="cartCount"
-                    >
-                        0
-                    </span>
-
-                </button>
-
-            </div>
-
+  <main>
+    <section class="hero container">
+      <div class="hero-copy">
+        <div class="eyebrow"><span>●</span> Fast delivery in supported areas</div>
+        <h1>Everything your home needs.<br><em>Without the wait.</em></h1>
+        <p>Fresh groceries, pantry staples and everyday essentials delivered to your door.</p>
+        <div class="hero-actions">
+          <button class="primary-button" id="heroShopButton" type="button">Shop groceries <span>→</span></button>
+          <button class="text-button" id="heroLocationButton" type="button">Check my delivery area</button>
         </div>
-
-    </header>
-
-
-    <!-- ================= MAIN ================= -->
-
-    <main>
-
-
-        <!-- HERO -->
-
-        <section class="hero">
-
-            <div class="hero-content">
-
-                <div class="hero-badge">
-                    ⚡ 30-MINUTE DELIVERY
-                </div>
-
-                <h1>
-                    Your daily ration.
-                    <span>Delivered fast.</span>
-                </h1>
-
-                <p>
-                    Groceries, staples, snacks and household essentials
-                    delivered to your doorstep quickly and reliably.
-                </p>
-
-                <div class="hero-buttons">
-
-                    <button
-                        class="primary-button"
-                        onclick="document.getElementById('catalog').scrollIntoView()"
-                    >
-                        Shop Now →
-                    </button>
-
-                    <button
-                        class="secondary-button"
-                        onclick="document.getElementById('catalog').scrollIntoView()"
-                    >
-                        Explore Categories
-                    </button>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- TRUST BAR -->
-
-        <section class="trust-bar">
-
-            <div class="trust-item">
-
-                <div class="trust-icon">
-                    ⚡
-                </div>
-
-                <div>
-                    <strong>Up to 30-minute delivery</strong>
-                    <span>Wherever Your Ration serves</span>
-                </div>
-
-            </div>
-
-
-            <div class="trust-item">
-
-                <div class="trust-icon">
-                    🛍️
-                </div>
-
-                <div>
-                    <strong>100+ everyday essentials</strong>
-                    <span>Everything for your home</span>
-                </div>
-
-            </div>
-
-
-            <div class="trust-item">
-
-                <div class="trust-icon">
-                    💚
-                </div>
-
-                <div>
-                    <strong>Great everyday prices</strong>
-                    <span>Real savings on selected products</span>
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- CATALOG -->
-
-        <section id="catalog">
-
-            <div class="section-header">
-
-                <div>
-
-                    <h2>
-                        Shop everyday essentials
-                    </h2>
-
-                    <p>
-                        Most purchased and best-value products
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <!-- CATEGORY BUTTONS -->
-
-            <div
-                class="category-container"
-                id="categoryContainer"
-            >
-            </div>
-
-
-            <!-- CATALOG CONTROLS -->
-
-            <div class="catalog-controls">
-
-                <span
-                    class="catalog-count"
-                    id="productCount"
-                >
-                    Products
-                </span>
-
-                <select
-                    class="sort-select"
-                    onchange="changeSort(this.value)"
-                >
-
-                    <option value="recommended">
-                        Recommended
-                    </option>
-
-                    <option value="popular">
-                        Most Purchased
-                    </option>
-
-                    <option value="discount">
-                        Biggest Discount
-                    </option>
-
-                    <option value="price-low">
-                        Price: Low to High
-                    </option>
-
-                    <option value="price-high">
-                        Price: High to Low
-                    </option>
-
-                    <option value="rating">
-                        Top Rated
-                    </option>
-
-                </select>
-
-            </div>
-
-
-            <!-- PRODUCTS -->
-
-            <div
-                class="product-grid"
-                id="productGrid"
-            >
-            </div>
-
-        </section>
-
-    </main>
-
-
-    <!-- ================= CART ================= -->
-
-    <aside
-        class="cart-drawer"
-        id="cartDrawer"
-        aria-label="Shopping cart"
-    >
-    </aside>
-
-
-    <!-- ================= FOOTER ================= -->
-
-    <footer class="site-footer">
-
-        <div class="footer-inner">
-
-            <div class="footer-brand">
-                Your Ration
-            </div>
-
-            <p>
-                Get Your Ration in Just 30 Minutes.
-            </p>
-
-            <p>
-                © 2026 Your Ration. All rights reserved.
-            </p>
-
+        <div class="hero-points">
+          <span>✓ Quality checked</span><span>✓ Clear pricing</span><span>✓ Secure checkout</span>
         </div>
+      </div>
+      <div class="hero-art">
+        <div class="hero-orbit orbit-one"></div>
+        <div class="hero-orbit orbit-two"></div>
+        <div class="hero-bag">🛍️</div>
+        <div class="hero-card hero-card-one"><b>30 min</b><small>delivery goal</small></div>
+        <div class="hero-card hero-card-two"><b>100+</b><small>daily essentials</small></div>
+        <div class="floating-food food-one">🥬</div>
+        <div class="floating-food food-two">🍚</div>
+        <div class="floating-food food-three">🥛</div>
+      </div>
+    </section>
 
-    </footer>
+    <section class="container quick-categories">
+      <div class="section-heading">
+        <div><span class="section-kicker">SHOP BY NEED</span><h2>What are you looking for?</h2></div>
+        <button class="ghost-button" id="viewAllButton" type="button">View all →</button>
+      </div>
+      <div class="category-cards" id="categoryCards"></div>
+    </section>
 
+    <section class="promo-row container">
+      <article class="promo-card promo-dark">
+        <div><span class="promo-tag">VALUE PICKS</span><h3>More essentials.<br>Better everyday prices.</h3><button type="button" data-promo-category="All">Explore deals →</button></div>
+        <span class="promo-visual">🛒</span>
+      </article>
+      <article class="promo-card promo-sand">
+        <div><span class="promo-tag">PANTRY WEEK</span><h3>Stock up on rice,<br>atta, dal & oil.</h3><button type="button" data-promo-category="Staples">Shop staples →</button></div>
+        <span class="promo-visual">🌾</span>
+      </article>
+      <article class="promo-card promo-mint">
+        <div><span class="promo-tag">SNACK BREAK</span><h3>Crunchy favourites<br>for less.</h3><button type="button" data-promo-category="Snacks">See snacks →</button></div>
+        <span class="promo-visual">🍿</span>
+      </article>
+    </section>
 
-    <!-- ================= JAVASCRIPT ================= -->
-    <script src="js/products.js"></script>
-    <script src="js/cart.js"></script>
-    <script src="js/app.js"></script>
+    <section class="container product-section" id="productsSection">
+      <div class="section-heading products-heading">
+        <div><span class="section-kicker">YOUR PICKS</span><h2 id="productHeading">Popular near you</h2></div>
+        <div class="product-controls">
+          <button class="filter-button" id="filterButton" type="button">☷ Filters <span id="filterCount"></span></button>
+          <select id="sortSelect" aria-label="Sort products">
+            <option value="recommended">Recommended</option>
+            <option value="popular">Popular</option>
+            <option value="discount">Highest discount</option>
+            <option value="price-low">Price: low to high</option>
+            <option value="price-high">Price: high to low</option>
+          </select>
+        </div>
+      </div>
+      <div class="active-filters" id="activeFilters"></div>
+      <div class="product-grid" id="productGrid"></div>
+      <div class="empty-state hidden" id="emptyState">
+        <div>⌕</div><h3>No products found</h3><p>Try another search or category.</p><button class="primary-button" id="resetSearch" type="button">Show all products</button>
+      </div>
+      <button class="load-more" id="loadMore" type="button">Show more products</button>
+    </section>
+  </main>
 
-    <!-- Firebase browser-compatible SDK -->
-    <script src="https://www.gstatic.com/firebasejs/12.5.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/12.5.0/firebase-auth-compat.js"></script>
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div><div class="brand footer-brand"><span class="brand-mark">YR</span><span class="brand-copy"><b>Your Ration</b><small>Daily essentials, delivered.</small></span></div><p>Fast, simple grocery shopping for everyday Indian homes.</p></div>
+      <div><b>Shop</b><a href="#productsSection" data-footer-category="All">All products</a><a href="#productsSection" data-footer-category="Staples">Staples</a><a href="#productsSection" data-footer-category="Snacks">Snacks</a></div>
+      <div><b>Help</b><button type="button" id="footerLocation">Delivery area</button><button type="button" id="footerOrders">My orders</button><button type="button" id="footerAccount">Account</button></div>
+      <div><b>Your Ration</b><span>Secure checkout</span><span>Transparent charges</span><span>Local delivery support</span></div>
+    </div>
+    <div class="container footer-bottom">© 2026 Your Ration · Built for fast everyday shopping</div>
+  </footer>
 
-    <script src="js/firebase.js"></script>
-    <script src="js/auth.js"></script>
+  <nav class="mobile-nav">
+    <button data-nav="home" class="active" type="button"><span>⌂</span><small>Home</small></button>
+    <button data-nav="categories" type="button"><span>▦</span><small>Categories</small></button>
+    <button data-nav="search" type="button"><span>⌕</span><small>Search</small></button>
+    <button data-nav="orders" type="button"><span>▣</span><small>Orders</small></button>
+    <button data-nav="account" type="button"><span>♙</span><small>Account</small></button>
+  </nav>
+
+  <div class="overlay" id="overlay"></div>
+
+  <aside class="side-panel cart-panel" id="cartPanel" aria-hidden="true">
+    <div class="panel-head"><div><small>YOUR BAG</small><h2>Your cart</h2></div><button class="close-button" data-close-panel="cartPanel" type="button">×</button></div>
+    <div class="cart-body" id="cartBody"></div>
+    <div class="cart-footer" id="cartFooter"></div>
+  </aside>
+
+  <aside class="side-panel filter-panel" id="filterPanel" aria-hidden="true">
+    <div class="panel-head"><div><small>REFINE</small><h2>Filters</h2></div><button class="close-button" data-close-panel="filterPanel" type="button">×</button></div>
+    <div class="filter-body">
+      <div class="filter-group"><b>Category</b><div id="filterCategories" class="filter-options"></div></div>
+      <div class="filter-group"><b>Price</b><label><input type="radio" name="priceFilter" value="all" checked> All prices</label><label><input type="radio" name="priceFilter" value="under100"> Under ₹100</label><label><input type="radio" name="priceFilter" value="100to300"> ₹100–₹300</label><label><input type="radio" name="priceFilter" value="over300"> Above ₹300</label></div>
+      <div class="filter-group"><b>Discount</b><label><input type="radio" name="discountFilter" value="all" checked> Any discount</label><label><input type="radio" name="discountFilter" value="20"> 20% or more</label><label><input type="radio" name="discountFilter" value="40"> 40% or more</label></div>
+    </div>
+    <div class="panel-actions"><button class="ghost-button" id="clearFilters" type="button">Clear</button><button class="primary-button" id="applyFilters" type="button">Apply filters</button></div>
+  </aside>
+
+  <div class="modal-wrap" id="productModal" aria-hidden="true">
+    <div class="modal product-modal">
+      <button class="close-button modal-close" data-close-modal="productModal" type="button">×</button>
+      <div id="productModalBody"></div>
+    </div>
+  </div>
+
+  <div class="modal-wrap" id="locationModal" aria-hidden="true">
+    <div class="modal location-modal">
+      <button class="close-button modal-close" data-close-modal="locationModal" type="button">×</button>
+      <span class="section-kicker">DELIVERY LOCATION</span><h2>Where should we deliver?</h2><p class="modal-note">Choose your location to estimate delivery availability.</p>
+      <div class="location-map" id="locationMap"><div class="map-placeholder">📍<b>Map ready</b><span>Use your current location or enter an address below.</span></div></div>
+      <button class="outline-button full-button" id="useLocationButton" type="button">⌖ Use my current location</button>
+      <div class="address-fields"><input id="addressInput" placeholder="House / building / street"><input id="landmarkInput" placeholder="Landmark (optional)"><div class="address-row"><input id="floorInput" type="number" min="0" value="0" placeholder="Floor"><input id="phoneInput" type="tel" inputmode="numeric" placeholder="Mobile number"></div></div>
+      <div id="deliveryCheck" class="delivery-check"></div>
+      <button class="primary-button full-button" id="saveLocationButton" type="button">Save delivery location</button>
+    </div>
+  </div>
+
+  <div class="modal-wrap" id="checkoutModal" aria-hidden="true">
+    <div class="modal checkout-modal">
+      <button class="close-button modal-close" data-close-modal="checkoutModal" type="button">×</button>
+      <div class="checkout-layout">
+        <div><span class="section-kicker">CHECKOUT</span><h2>Review your order</h2><div id="checkoutItems"></div></div>
+        <div class="checkout-summary" id="checkoutSummary"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-wrap" id="ordersModal" aria-hidden="true">
+    <div class="modal orders-modal">
+      <button class="close-button modal-close" data-close-modal="ordersModal" type="button">×</button>
+      <span class="section-kicker">YOUR ORDERS</span><h2>Orders & delivery</h2><div id="ordersBody"></div>
+    </div>
+  </div>
+
+  <div class="modal-wrap" id="accountModal" aria-hidden="true">
+    <div class="modal account-modal">
+      <button class="close-button modal-close" data-close-modal="accountModal" type="button">×</button>
+      <div class="account-avatar">YR</div><span class="section-kicker">YOUR RATION</span><h2>Your account</h2>
+      <p id="accountStatus">You are shopping as a guest.</p>
+      <div class="account-actions"><button class="primary-button full-button" id="accountAuthButton" type="button">Sign in / Create account</button><button class="outline-button full-button" id="accountOrdersButton" type="button">View my orders</button></div>
+      <div class="account-note">Account authentication is powered by Firebase when configured.</div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="js/products.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/app.js"></script>
+
+  <script src="https://www.gstatic.com/firebasejs/12.5.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/12.5.0/firebase-auth-compat.js"></script>
+  <script src="js/firebase.js"></script>
+  <script src="js/auth.js"></script>
 </body>
-
 </html>
